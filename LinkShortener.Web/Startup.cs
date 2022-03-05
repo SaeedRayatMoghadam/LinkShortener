@@ -8,6 +8,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using LinkShortener.Data.Context;
+using LinkShortener.IOC;
+using Microsoft.EntityFrameworkCore;
 
 namespace LinkShortener.Web
 {
@@ -24,6 +27,21 @@ namespace LinkShortener.Web
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+
+            #region IOC
+
+            RegisterService(services);
+
+            #endregion
+
+            #region DB-Context
+
+            services.AddDbContext<LinkShortenerDbContext>(options =>
+            {
+                options.UseSqlServer(Configuration.GetConnectionString("LinkShortenerSqlConnection"));
+            });
+
+            #endregion
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -53,5 +71,14 @@ namespace LinkShortener.Web
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
         }
+
+        #region IOC
+
+        public static void RegisterService(IServiceCollection service)
+        {
+            DependencyContainer.RegisterService(service);
+        }
+
+        #endregion
     }
 }
