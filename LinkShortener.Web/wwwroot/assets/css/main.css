@@ -1822,6 +1822,7 @@ input[type="submit"] {
 
 .footer-section {
     position: relative;
+    top: 55px
 }
 
 .footer-top,
@@ -1976,11 +1977,11 @@ input[type="submit"] {
     width: 100%;
     position: fixed;
     z-index: 999;
-    top: 5px;
+    top: 0;
     -webkit-transition: all ease 0.3s;
     -moz-transition: all ease 0.3s;
     transition: all ease 0.3s;
-    padding: 15px 0;
+    padding: 0;
 }
 
 .header-section .header-wrapper {

@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using LinkShortener.Application.DTOs.Account;
+using LinkShortener.Domain.Models.Account;
 
 namespace LinkShortener.Application.Interfaces
 {
@@ -7,5 +8,6 @@ namespace LinkShortener.Application.Interfaces
     {
         Task<RegisterResult> Register(RegisterDto registerDto);
         Task<LoginResult> Login(LoginDto loginDto);
+        Task<User> Get(string mobile);
     }
 }

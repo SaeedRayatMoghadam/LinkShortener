@@ -52,5 +52,10 @@ namespace LinkShortener.Application.Services
 
             return LoginResult.Success;
         }
+
+        public async Task<User> Get(string mobile)
+        {
+            return await _userRepository.Get(mobile);
+        }
     }
 }
