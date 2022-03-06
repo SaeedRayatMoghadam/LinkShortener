@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using LinkShortener.Domain.Models.Account;
+using LinkShortener.Domain.Models.Link;
 using Microsoft.EntityFrameworkCore;
 
 namespace LinkShortener.Data.Context
@@ -9,12 +10,15 @@ namespace LinkShortener.Data.Context
         public LinkShortenerDbContext(DbContextOptions<LinkShortenerDbContext> options):base(options)
         {
         }
-
-        #region Account
+        
 
         public DbSet<User> Users { get; set; }
 
-        #endregion
+        public DbSet<ShortUrl> ShortUrls { get; set; }
+        public DbSet<Browser> Browsers { get; set; }
+        public DbSet<Device> Devices { get; set; }
+        public DbSet<OS> Oses { get; set; }
+        public DbSet<RequestUrl> RequestUrls { get; set; }
 
 
         #region OnModelCreating

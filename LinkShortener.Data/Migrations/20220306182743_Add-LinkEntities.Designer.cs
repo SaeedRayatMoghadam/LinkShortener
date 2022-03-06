@@ -4,14 +4,16 @@ using LinkShortener.Data.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace LinkShortener.Data.Migrations
 {
     [DbContext(typeof(LinkShortenerDbContext))]
-    partial class LinkShortenerDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220306182743_Add-LinkEntities")]
+    partial class AddLinkEntities
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
