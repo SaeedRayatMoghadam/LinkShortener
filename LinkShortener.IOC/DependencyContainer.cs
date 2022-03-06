@@ -13,12 +13,13 @@ namespace LinkShortener.IOC
             #region Repositories
 
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<ILinkRepository, LinkRepository>();
 
             #endregion
 
             #region Services
 
-            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<ILinkService, LinkService>();
 
             #endregion
 

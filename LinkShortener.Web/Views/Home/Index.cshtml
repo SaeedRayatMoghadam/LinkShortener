@@ -1,4 +1,5 @@
-﻿@{
+﻿@model LinkShortener.Application.DTOs.Link.UrlRequestDto
+@{
     ViewData["Title"] = "Home Page";
 }
 
@@ -8,17 +9,27 @@
         <div class="round-1"><img src="/assets/images/banner/01.png" alt="banner"></div>
         <div class="round-2"><img src="/assets/images/banner/02.png" alt="banner"></div>
     </div>
-    <div class="container">
+    <div class="container" style="position: relative;bottom: 100px">
         <div class="banner-content"></div>
         <div class="banner-form-group">
             <h3 class="subtitle">Shorten URL Is Just Simple</h3>
-            <form class="banner-form" asp-action="Index" method="post">
-                <input type="text" placeholder="Your URL here" />
-                <button type="submit"> get link! <i class="flaticon-startup"></i></button>
+            <form class="banner-form" asp-controller="Home" asp-action="Index" method="post">
+                <input asp-for="OriginalUrl" type="text" placeholder="Enter Your URL" />
+                <span asp-validation-for="OriginalUrl" class="text-danger"></span>
+                <button type="submit">Shorten Link! <i class="flaticon-startup"></i></button>
             </form>
 
-            <div class="alert alert-success">
-            </div>
+            @if (ViewBag.isSuccess != null)
+            {
+                <div class="alert alert-success">
+                    <a href="@ViewBag.UserShortLink" target="_blank">@ViewBag.UserShortLink</a>
+                </div>
+            }
         </div>
     </div>
 </section>
+
+@section Scripts
+{
+<partial name="_ValidationScriptsPartial" />
+}

@@ -10,8 +10,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using LinkShortener.Data.Context;
 using LinkShortener.IOC;
+using LinkShortener.Web.Middlesware;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Primitives;
 
 namespace LinkShortener.Web
 {
@@ -81,12 +83,17 @@ namespace LinkShortener.Web
 
             app.UseAuthentication();
             app.UseAuthorization();
+            
+
+            app.UseShortLinkUrlRedirect();
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+                endpoints.MapFallbackToController("Index", "Home");
             });
         }
 

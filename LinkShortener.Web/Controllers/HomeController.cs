@@ -6,16 +6,18 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using LinkShortener.Application.DTOs.Link;
+using LinkShortener.Application.Interfaces;
 
 namespace LinkShortener.Web.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly ILinkService _linkService;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILinkService linkService)
         {
-            _logger = logger;
+            _linkService = linkService;
         }
 
         public IActionResult Index()
@@ -23,15 +25,37 @@ namespace LinkShortener.Web.Controllers
             return View();
         }
 
-        public IActionResult Privacy()
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Index(UrlRequestDto request)
         {
-            return View();
-        }
+            if (!ModelState.IsValid) return View(request);
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            if (request.OriginalUrl.Contains("https://") || request.OriginalUrl.Contains("http://"))
+            {
+                var url = new Uri(request.OriginalUrl);
+                var shortUrl = _linkService.GenerateShortUrl(url);
+
+                var result = await _linkService.Create(shortUrl);
+
+                switch (result)
+                {
+                    case UrlRequestResult.Error:
+                        TempData[ErrorMessage] = "Something went WRONG !";
+                        break;
+                    case UrlRequestResult.Success:
+                        TempData[SuccessMessage] = "Link Successfully Shortened !";
+                        ViewBag.isSuccess = true;
+                        ViewBag.UserShortLink = shortUrl.Value.ToString();
+                        break;
+                }
+                return View(request);
+            }
+            else
+            {
+                TempData[ErrorMessage] = "Link is NOT Valid";
+                return View(request);
+            }
         }
     }
 }
