@@ -94,6 +94,11 @@ namespace LinkShortener.Web
                     pattern: "{controller=Home}/{action=Index}/{id?}");
 
                 endpoints.MapFallbackToController("Index", "Home");
+
+                endpoints.MapControllerRoute(
+                    name: "areas",
+                    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
+                );
             });
         }
 
