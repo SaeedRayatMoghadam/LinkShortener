@@ -1,14 +1,23 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Threading.Tasks;
+using LinkShortener.Application.Interfaces;
+using Microsoft.AspNetCore.Mvc;
 
 namespace LinkShortener.Web.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Route("Admin")]
     public class HomeController : Controller
     {
-        public IActionResult Index()
+        private readonly IUserService _userService;
+
+        public HomeController(IUserService userService)
         {
-            return View();
+            _userService = userService;
+        }
+
+        [HttpGet("All-Users")]
+        public async Task<IActionResult> Index()
+        {
+            return View(await _userService.GetAll());
         }
     }
 }

@@ -7,6 +7,7 @@
   <ItemGroup>
     <Folder Include="Models\Account\" />
     <Folder Include="Interfaces\" />
+    <Folder Include="ViewModels\Account\" />
   </ItemGroup>
 
 </Project>

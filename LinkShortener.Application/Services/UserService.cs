@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using LinkShortener.Application.DTOs.Account;
 using LinkShortener.Application.Interfaces;
 using LinkShortener.Application.Utilities;
 using LinkShortener.Domain.Interfaces;
 using LinkShortener.Domain.Models.Account;
+using LinkShortener.Domain.ViewModels.Account;
 
 namespace LinkShortener.Application.Services
 {
@@ -58,6 +60,11 @@ namespace LinkShortener.Application.Services
         public async Task<User> Get(string mobile)
         {
             return await _userRepository.Get(mobile);
+        }
+
+        public async Task<List<UsersViewModel>> GetAll()
+        {
+            return await _userRepository.GetAll();
         }
     }
 }

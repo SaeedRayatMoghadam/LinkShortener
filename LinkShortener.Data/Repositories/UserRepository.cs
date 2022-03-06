@@ -1,8 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using LinkShortener.Data.Context;
 using LinkShortener.Domain.Interfaces;
 using LinkShortener.Domain.Models.Account;
+using LinkShortener.Domain.ViewModels.Account;
 using Microsoft.EntityFrameworkCore;
 
 namespace LinkShortener.Data.Repositories
@@ -28,6 +31,20 @@ namespace LinkShortener.Data.Repositories
         }
 
         #endregion
+
+        public async Task<List<UsersViewModel>> GetAll()
+        {
+            return await _context.Users.AsQueryable()
+                .Select(u => new UsersViewModel()
+                {
+                    UserId = u.Id,
+                    FirstName = u.FirstName,
+                    LastName = u.LastName,
+                    Mobile = u.Mobile,
+                    IsAdmin = u.IsAdmin,
+                    IsBlocked = u.IsBlocked
+                }).ToListAsync();
+        }
 
         public async Task<User> Get(string mobile)
         {
