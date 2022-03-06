@@ -29,7 +29,9 @@ namespace LinkShortener.Application.Services
                     Password = registerDto.Password.EncodeToMd5(),
                     Mobile = registerDto.Mobile,
                     CreateDate = DateTime.Now,
-                    MobileActiveCode = Guid.NewGuid().ToString()
+                    MobileActiveCode = Guid.NewGuid().ToString(),
+                    LastUpdateDate = DateTime.Now,
+                    IsAdmin = false
                 };
 
                 await _userRepository.Create(user);

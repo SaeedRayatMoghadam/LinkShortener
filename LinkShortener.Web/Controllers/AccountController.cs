@@ -54,7 +54,6 @@ namespace LinkShortener.Web.Controllers
         [HttpGet("Login")]
         public async Task<IActionResult> Login()
         {
-
             return View();
         }
 
@@ -79,7 +78,8 @@ namespace LinkShortener.Web.Controllers
                     var claims = new List<Claim>()
                     {
                         new Claim(ClaimTypes.Name, user.Mobile),
-                        new Claim(ClaimTypes.NameIdentifier, user.Id.ToString())
+                        new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                        new Claim("IsAdmin",user.IsAdmin.ToString())
                     };
 
                     var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);

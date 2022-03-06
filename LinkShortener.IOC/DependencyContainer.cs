@@ -19,6 +19,7 @@ namespace LinkShortener.IOC
 
             #region Services
 
+            services.AddScoped<IUserService, UserService>();
             services.AddScoped<ILinkService, LinkService>();
 
             #endregion

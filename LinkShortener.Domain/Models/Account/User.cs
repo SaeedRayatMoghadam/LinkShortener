@@ -31,5 +31,7 @@ namespace LinkShortener.Domain.Models.Account
 
         [Required(ErrorMessage = "Please Enter {0}")]
         public bool IsBlocked { get; set; }
+
+        public bool IsAdmin { get; set; }
     }
 }

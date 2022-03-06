@@ -7,6 +7,7 @@ using Microsoft.Extensions.Hosting;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using LinkShortener.Data.Context;
 using LinkShortener.IOC;
@@ -79,21 +80,36 @@ namespace LinkShortener.Web
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
+            app.UseShortLinkUrlRedirect();
             app.UseRouting();
 
             app.UseAuthentication();
             app.UseAuthorization();
-            
 
-            app.UseShortLinkUrlRedirect();
+
+            app.Use(async (context, next) =>
+            {
+                if (context.Request.Path.StartsWithSegments("/Admin"))
+                {
+                    if(!context.User.Identity.IsAuthenticated)
+                        context.Response.Redirect("/Login");
+
+                    else if(!bool.Parse(context.User.FindFirstValue("IsAdmin")))
+                        context.Response.Redirect("/Login");
+                }
+
+                await next.Invoke();
+            });
+
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapFallbackToController("Index", "Home");
+
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
 
-                endpoints.MapFallbackToController("Index", "Home");
 
                 endpoints.MapControllerRoute(
                     name: "areas",
