@@ -22,7 +22,6 @@ namespace LinkShortener.Web.Controllers
         [HttpGet("Register")]
         public async Task<IActionResult> Register()
         {
-
             return View();
         }
 
@@ -33,6 +32,17 @@ namespace LinkShortener.Web.Controllers
             if (!ModelState.IsValid) return View(model);
 
             var result = await _userService.Register(model);
+
+            switch (result)
+            {
+                case RegisterResult.MobileExists:
+                    TempData[ErrorMessage] = "PhoneNumber NOT available";
+                    ModelState.AddModelError("Mobile", "PhoneNumber NOT available");
+                    break;
+                case RegisterResult.Success:
+                    TempData[SuccessMessage] = "Successfully Registered";
+                    return Redirect("/");
+            }
 
             return View();
         }
