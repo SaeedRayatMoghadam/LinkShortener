@@ -9,14 +9,21 @@ namespace LinkShortener.Web.Areas.Admin.Controllers
     public class HomeController : Controller
     {
         private readonly IUserService _userService;
+        private readonly ILinkService _linkService;
 
-        public HomeController(IUserService userService)
+        public HomeController(IUserService userService, ILinkService linkService)
         {
             _userService = userService;
+            _linkService = linkService;
+        }
+        [HttpGet("Links")]
+        public async Task<IActionResult> Index()
+        {
+            return View(await _linkService.GetAll());
         }
 
         [HttpGet("All-Users")]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Users()
         {
             return View(await _userService.GetAll());
         }

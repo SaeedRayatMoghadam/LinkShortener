@@ -1,7 +1,10 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using LinkShortener.Data.Context;
 using LinkShortener.Domain.Interfaces;
 using LinkShortener.Domain.Models.Link;
+using LinkShortener.Domain.ViewModels.Link;
 using Microsoft.EntityFrameworkCore;
 
 namespace LinkShortener.Data.Repositories
@@ -44,6 +47,18 @@ namespace LinkShortener.Data.Repositories
         public async Task<ShortUrl> Get(string token)
         {
             return await _context.ShortUrls.AsQueryable().SingleOrDefaultAsync(u => u.Token == token);
+        }
+
+        public async Task<List<LinksViewModel>> GetAll()
+        {
+            return await _context.ShortUrls.AsQueryable()
+                .Select(s => new LinksViewModel()
+                {
+                    OriginalUrl = s.OriginalUrl,
+                    Value = s.Value,
+                    CreateDate = s.CreateDate,
+                    Token = s.Token
+                }).ToListAsync();
         }
 
         public async Task CreateRequestUrl(RequestUrl requestUrl)

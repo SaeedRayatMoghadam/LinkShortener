@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using LinkShortener.Application.DTOs.Link;
 using LinkShortener.Application.Interfaces;
 using LinkShortener.Application.Utilities;
 using LinkShortener.Domain.Interfaces;
 using LinkShortener.Domain.Models.Link;
+using LinkShortener.Domain.ViewModels.Link;
 using UAParser;
 using Device = LinkShortener.Domain.Models.Link.Device;
 using OS = LinkShortener.Domain.Models.Link.OS;
@@ -71,6 +73,11 @@ namespace LinkShortener.Application.Services
         public async Task<ShortUrl> Get(string token)
         {
             return await _linkRepository.Get(token);
+        }
+
+        public async Task<List<LinksViewModel>> GetAll()
+        {
+            return await _linkRepository.GetAll();
         }
 
         public async Task<UrlRequestResult> Create(ShortUrl url)
