@@ -46,6 +46,11 @@ namespace LinkShortener.Data.Repositories
             return await _context.ShortUrls.AsQueryable().SingleOrDefaultAsync(u => u.Token == token);
         }
 
+        public async Task CreateRequestUrl(RequestUrl requestUrl)
+        {
+            await _context.RequestUrls.AddAsync(requestUrl);
+        }
+
         public async Task Save()
         {
             await _context.SaveChangesAsync();

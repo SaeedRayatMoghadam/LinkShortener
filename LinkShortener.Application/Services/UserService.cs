@@ -21,6 +21,31 @@ namespace LinkShortener.Application.Services
         }
 
 
+        public async Task<CreateUserResult> Create(CreateUserDto user)
+        {
+            if (!await _userRepository.IsMobileExist(user.Mobile))
+            {
+                var newUser = new User()
+                {
+                    FirstName = user.FirstName,
+                    LastName = user.LastName,
+                    Password = user.Password.EncodeToMd5(),
+                    Mobile = user.Mobile,
+                    CreateDate = DateTime.Now,
+                    MobileActiveCode = Guid.NewGuid().ToString(),
+                    LastUpdateDate = DateTime.Now,
+                    IsAdmin = user.IsAdmin,
+                    IsBlocked = user.IsBlocked
+                };
+                await _userRepository.Create(newUser);
+                await _userRepository.Save();
+
+                return CreateUserResult.Success;
+            }
+
+            return CreateUserResult.Error;
+        }
+
         public async Task<RegisterResult> Register(RegisterDto registerDto)
         {
             if (!await _userRepository.IsMobileExist(registerDto.Mobile))

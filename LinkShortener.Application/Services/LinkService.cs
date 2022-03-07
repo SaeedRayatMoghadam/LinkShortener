@@ -81,5 +81,20 @@ namespace LinkShortener.Application.Services
 
             return UrlRequestResult.Success;
         }
+
+        public async Task CreateRequestUrl(string token)
+        {
+            var shortUrl = await _linkRepository.Get(token);
+
+            var requestUrl = new RequestUrl()
+            {
+                ShortUrl = shortUrl,
+                RequestDateTime = DateTime.Now,
+                CreateDate = DateTime.Now
+            };
+
+            await _linkRepository.CreateRequestUrl(requestUrl);
+            await _linkRepository.Save();
+        }
     }
 }

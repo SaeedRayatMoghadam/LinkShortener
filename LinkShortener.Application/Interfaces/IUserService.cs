@@ -11,10 +11,12 @@ namespace LinkShortener.Application.Interfaces
         Task<User> Get(string mobile);
         Task<UpdateUserDto> Get(long id);
         Task<List<UsersViewModel>> GetAll();
-
+        Task<CreateUserResult> Create(CreateUserDto user);
+            
         Task<RegisterResult> Register(RegisterDto registerDto);
         Task<LoginResult> Login(LoginDto loginDto);
 
         Task<UpdateUserResult> Update(UpdateUserDto updateUser);
+
     } 
 }

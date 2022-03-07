@@ -49,5 +49,33 @@ namespace LinkShortener.Web.Areas.Admin.Controllers
 
             return View();
         }
+
+        [HttpGet("CreateUser")]
+        public async Task<IActionResult> CreateUser()
+        {
+            return View();
+        }
+
+        [HttpPost("CreateUser")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreateUser(CreateUserDto user)
+        {
+            if(!ModelState.IsValid) return View(user);
+
+            var result = await _userService.Create(user);
+
+            switch (result)
+            {
+                case CreateUserResult.Error:
+                    TempData["ErrorMessage"] = "Mobile is NOT Available !";
+                    ModelState.AddModelError("Mobile", "Mobile is NOT Available !");
+                    break;
+                case CreateUserResult.Success:
+                    TempData["SuccessMessage"] = "User Successfully Created !";
+                    return RedirectToAction("Index");
+            }
+
+            return View();
+        }
     }
 }

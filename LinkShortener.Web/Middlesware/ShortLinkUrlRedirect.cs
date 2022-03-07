@@ -29,6 +29,7 @@ namespace LinkShortener.Web.Middlesware
                 _linkService.CreateUserAgent(userAgent);
                 var token = httpContext.Request.Path.ToString().Substring(1);
                 var shortUrl = await _linkService.Get(token);
+                await _linkService.CreateRequestUrl(token);
 
                 httpContext.Response.Redirect(shortUrl != null
                     ? shortUrl.OriginalUrl.ToString()

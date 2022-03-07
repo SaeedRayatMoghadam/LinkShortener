@@ -1,0 +1,62 @@
+﻿@model LinkShortener.Application.DTOs.Account.CreateUserDto
+@{
+    ViewData["Title"] = "Create User";
+}
+
+@section Scripts
+{
+    <partial name="_ValidationScriptsPartial"/>
+}
+
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2">@ViewData["Title"]</h1>
+    <div class="btn-toolbar mb-2 mb-md-0">
+        <div class="btn-group me-2">
+            <a asp-area="Admin" asp-controller="Home" asp-action="Index" class="btn btn-sm btn-outline-secondary">Back</a>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <form asp-area="Admin" asp-controller="Home" asp-action="CreateUser" method="post">
+        <div class="col-md-12">
+            <div class="mb-3 row">
+                <label for="inputName" class="col-sm-2 col-form-label">Name :</label>
+                <div class="col-sm-10">
+                    <input class="form-control" asp-for="FirstName">
+                    <span asp-validation-for="LastName" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="mb-3 row">
+                <label class="col-sm-2 col-form-label">Last Name :</label>
+                <div class="col-sm-10">
+                    <input class="form-control" asp-for="LastName">
+                    <span asp-validation-for="LastName" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="mb-3 row">
+                <label class="col-sm-2 form-check-label">Password</label>
+                <div class="col-sm-10">
+                    <input class="form-control" asp-for="Password" />
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="mb-3 row">
+                <label class="col-sm-2 col-form-label">Phone Number :</label>
+                <div class="col-sm-10">
+                    <input class="form-control" asp-for="Mobile">
+                    <span asp-validation-for="Mobile" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="mb-3 row">
+                <label class="col-sm-2 col-form-label">IsAdmin :</label>
+                <div class="col-sm-10">
+                    <input class="form-check" asp-for="IsAdmin" style="width: 25px" />
+                    <span asp-validation-for="IsAdmin" class="text-danger"></span>
+                </div>
+            </div>
+            <input type="submit" value="Create" class="btn btn-success" />
+        </div>
+
+    </form>
+</div>

@@ -13,5 +13,7 @@ namespace LinkShortener.Application.Interfaces
         Task<ShortUrl> Get(string token);
 
         Task<UrlRequestResult> Create(ShortUrl url);
+
+        Task CreateRequestUrl(string token);
     }
 }
