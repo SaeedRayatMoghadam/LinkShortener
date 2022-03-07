@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace LinkShortener.Data.Repositories
 {
-    public class UserRepository:IUserRepository
+    public class UserRepository:IUserRepository 
     {
         private readonly LinkShortenerDbContext _context;
 
@@ -31,6 +31,11 @@ namespace LinkShortener.Data.Repositories
         }
 
         #endregion
+
+        public async Task<User> Get(long id)
+        {
+            return await _context.Users.AsQueryable().SingleOrDefaultAsync(u => u.Id == id);
+        }
 
         public async Task<List<UsersViewModel>> GetAll()
         {
@@ -54,6 +59,11 @@ namespace LinkShortener.Data.Repositories
         public async Task Create(User user)
         {
             await _context.Users.AddAsync(user);
+        }
+
+        public void Update(User user)
+        {
+            _context.Users.Update(user);
         }
 
         public async Task<bool> IsMobileExist(string mobile)

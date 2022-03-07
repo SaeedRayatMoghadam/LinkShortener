@@ -8,9 +8,13 @@ namespace LinkShortener.Domain.Interfaces
 {
     public interface IUserRepository:IAsyncDisposable
     {
-        Task<List<UsersViewModel>> GetAll();
         Task<User> Get(string mobile);
+        Task<User> Get(long id);
+        Task<List<UsersViewModel>> GetAll();
+
         Task Create(User user);
+        void Update(User user);
+
         Task<bool> IsMobileExist(string mobile);
 
         Task Save();

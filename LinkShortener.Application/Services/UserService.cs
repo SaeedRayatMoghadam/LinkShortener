@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Threading.Tasks;
 using LinkShortener.Application.DTOs.Account;
 using LinkShortener.Application.Interfaces;
@@ -57,9 +58,40 @@ namespace LinkShortener.Application.Services
             return LoginResult.Success;
         }
 
+        public async Task<UpdateUserResult> Update(UpdateUserDto updateUser)
+        {
+            var user = await _userRepository.Get(updateUser.Id);
+            if(user == null) return UpdateUserResult.NotFound;
+
+            user.FirstName = updateUser.FirstName;
+            user.LastName = updateUser.LastName;
+            user.IsAdmin = updateUser.IsAdmin;
+            user.IsBlocked = updateUser.IsBlocked;
+
+            _userRepository.Update(user);
+            await _userRepository.Save();
+
+            return UpdateUserResult.Success;
+        }
+
         public async Task<User> Get(string mobile)
         {
             return await _userRepository.Get(mobile);
+        }
+
+        public async Task<UpdateUserDto> Get(long id)
+        {
+            var user = await _userRepository.Get(id);
+
+            return new UpdateUserDto()
+            {
+                Id = user.Id,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                IsAdmin = user.IsAdmin,
+                IsBlocked = user.IsBlocked,
+                Mobile = user.Mobile
+            };
         }
 
         public async Task<List<UsersViewModel>> GetAll()

@@ -57,7 +57,12 @@
                             }
                         </td>
                         <td>
-                            <a class="btn btn-sm btn-outline-warning"><i class="fa fa-pen"></i></a>
+                        <a
+                            asp-area="Admin"
+                            asp-controller="Home"
+                            asp-action="UpdateUser"
+                            asp-route-id="@user.UserId" 
+                            class="btn btn-sm btn-outline-warning"><i class="fa fa-pen"></i></a>
                             <a class="btn btn-sm btn-outline-danger"><i class="fa fa-trash"></i></a>
                         </td>
                     </tr>

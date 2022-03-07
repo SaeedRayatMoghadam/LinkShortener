@@ -8,9 +8,13 @@ namespace LinkShortener.Application.Interfaces
 {
     public interface IUserService
     {
+        Task<User> Get(string mobile);
+        Task<UpdateUserDto> Get(long id);
+        Task<List<UsersViewModel>> GetAll();
+
         Task<RegisterResult> Register(RegisterDto registerDto);
         Task<LoginResult> Login(LoginDto loginDto);
-        Task<User> Get(string mobile);
-        Task<List<UsersViewModel>> GetAll();
-    }
+
+        Task<UpdateUserResult> Update(UpdateUserDto updateUser);
+    } 
 }
